@@ -1,0 +1,21 @@
+{
+  "name": "bondly",
+  "version": "1.0.0",
+  "description": "A chat application made with MERN stack",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "chat-app",
+    "fullstack",
+    "MERN"
+  ],
+  "author": "Utkarsh Sharan",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "3.7.4"
+  }
+}
