@@ -1,12 +1,16 @@
-import {Router} from "express";
+import { Router } from "express";
 import { signup, login, logout } from "../controllers/auth.controllers.js";
+import { validate } from "../middlewares/validator.middleware.js";
+import { userSignupValidator } from "../validators/index.js";
 
 const router = Router();
 
-router.route("/signup").post(signup);
+//Un-protected routes
+router.route("/signup").post(userSignupValidator(), validate, signup);
 
-router.route("/signup").post(login);
+router.route("/login").post(login);
 
-router.route("/signup").post(logout);
+//Protected routes
+router.route("/logout").post(logout);
 
 export default router;
