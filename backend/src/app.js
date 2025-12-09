@@ -18,6 +18,11 @@ app.use(
   }),
 );
 
+//Routes
+import authRouter from "./routes/auth.routes.js";
+
+app.use("/api/routes/auth", authRouter);
+
 app.get("/", (req, res) => {
   res.send("Hello from test!");
 });
