@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/api-response.js";
 import { ApiError } from "../utils/api-error.js";
 import { User } from "../models/user.model.js";
 import { sendWelcomeEmail } from "../utils/email-handler.js";
+import cloudinary from "../lib/cloudinary.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -95,6 +96,31 @@ export const login = asyncHandler(async (req, res) => {
           refreshToken,
         },
         "User logged in successfully!",
+      ),
+    );
+});
+
+export const updateProfile = asyncHandler(async (req, res) => {
+  const { avatar } = req.body;
+
+  if (!avatar) throw new ApiError(400, "Avatar is required!");
+
+  const userId = req.user._id;
+  const uploadAvatar = await cloudinary.uploader.upload(avatar);
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { avatar: { url: uploadAvatar.secure_url, localPath: "" } },
+    { new: true },
+  );
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { updatedUser },
+        "User profile updated successfully!",
       ),
     );
 });
