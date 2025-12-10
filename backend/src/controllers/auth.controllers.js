@@ -106,13 +106,21 @@ export const updateProfile = asyncHandler(async (req, res) => {
   if (!avatar) throw new ApiError(400, "Avatar is required!");
 
   const userId = req.user._id;
-  const uploadAvatar = await cloudinary.uploader.upload(avatar);
+
+  let uploadAvatar;
+  try {
+    uploadAvatar = await cloudinary.uploader.upload(avatar);
+  } catch (error) {
+    throw new ApiError(500, "Failed to upload Avatar!", error);
+  }
 
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     { "avatar.url": uploadAvatar.secure_url },
     { new: true },
   );
+
+  if(!updatedUser) throw new ApiError(404, "User not found!");
 
   return res
     .status(200)
