@@ -7,12 +7,16 @@ import {
 } from "../controllers/auth.controllers.js";
 import { validate } from "../middlewares/validator.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { arcjetProtection } from "../middlewares/arcjet.middleware.js";
 import {
   userSignupValidator,
   userLoginValidator,
 } from "../validators/index.js";
 
 const router = Router();
+
+//Rate limiter
+router.use(arcjetProtection);
 
 //Un-protected routes
 router.route("/signup").post(userSignupValidator(), validate, signup);
