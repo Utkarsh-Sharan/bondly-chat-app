@@ -110,7 +110,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
 
   const updatedUser = await User.findByIdAndUpdate(
     userId,
-    { avatar: { url: uploadAvatar.secure_url, localPath: "" } },
+    { "avatar.url": uploadAvatar.secure_url },
     { new: true },
   );
 
