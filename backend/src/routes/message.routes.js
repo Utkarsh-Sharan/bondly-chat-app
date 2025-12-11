@@ -1,12 +1,16 @@
 import { Router } from "express";
-import { getAllContacts } from "../controllers/message.controllers.js";
+import {
+  getAllContacts,
+  getMessagesByUserId,
+  sendMessagetoUser,
+} from "../controllers/message.controllers.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
 router.route("/contacts").get(verifyJWT, getAllContacts);
 // router.route("/chats").get(getChatParteners);
-router.route("/get-message/:id").get(getMessagesByUserId);
-// router.route("/send-message/:id").post(sendMessagetoUser);
+router.route("/get-messages/:id").get(verifyJWT, getMessagesByUserId);
+router.route("/send-message/:id").post(verifyJWT, sendMessagetoUser);
 
 export default router;

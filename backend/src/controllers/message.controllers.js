@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/api-response.js";
 import { ApiError } from "../utils/api-error.js";
 import { Message } from "../models/message.model.js";
 import { User } from "../models/user.model.js";
+import cloudinary from "../lib/cloudinary.js";
 
 export const getAllContacts = asyncHandler(async (req, res) => {
   const loggedInUserId = req.user._id;
@@ -46,5 +47,38 @@ export const getMessagesByUserId = asyncHandler(async (req, res) => {
     .status(200)
     .json(
       new ApiResponse(200, { messages }, "Fetched all messages successfully!"),
+    );
+});
+
+export const sendMessagetoUser = asyncHandler(async (req, res) => {
+  const { text, image } = req.body;
+  const { id: receiverId } = req.params;
+  const senderId = req.user._id;
+
+  let imageUrl;
+  if (image) {
+    const uploadResponse = await cloudinary.uploader.upload(image);
+    if (!uploadResponse) throw new ApiError(400, "Failed to upload image!");
+
+    imageUrl = uploadResponse.secure_url;
+  }
+
+  const newMessage = new Message({
+    senderId,
+    receiverId,
+    text,
+    image: imageUrl,
+  });
+
+  if (!newMessage) throw new ApiError(400, "Failed to create new message!");
+
+  await newMessage.save({ validateBeforeSave: false });
+
+  //todo: send message to receiver if they are online with socket.io
+
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(201, { newMessage }, "Message created successfully!"),
     );
 });
