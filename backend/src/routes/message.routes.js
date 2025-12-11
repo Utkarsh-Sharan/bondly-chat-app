@@ -6,8 +6,7 @@ const router = Router();
 
 router.route("/contacts").get(verifyJWT, getAllContacts);
 // router.route("/chats").get(getChatParteners);
-// router.route("/get-message/:id").get(getMessageByUserId);
-
+router.route("/get-message/:id").get(getMessagesByUserId);
 // router.route("/send-message/:id").post(sendMessagetoUser);
 
 export default router;
