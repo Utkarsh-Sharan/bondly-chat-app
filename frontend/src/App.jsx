@@ -1,7 +1,7 @@
 import React from "react";
 
 function App() {
-  return <div className="bg-red-400">App</div>;
+  return <button className="btn btn-primary">Click!</button>;
 }
 
 export default App;
