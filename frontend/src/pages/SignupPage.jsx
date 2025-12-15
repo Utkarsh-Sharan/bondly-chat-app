@@ -28,7 +28,7 @@ function SignupPage() {
       <div className="relative w-full max-w-6xl md:h-[800px] h-[650px]">
         <BorderAnimatedContainer>
           <div className="w-full flex flex-col md:flex-row">
-            {/* FORM COLUMN */}
+            {/* FORM COLUMN 1 */}
             <div className="md:w-1/2 p-8 flex items-center justify-center md:border-r border-slate-600/30">
               <div className="w-full max-w-md">
                 {/* HEADING TEXT */}
@@ -128,6 +128,25 @@ function SignupPage() {
                   <Link to={"/login"} className="auth-link">
                     Already have an account? Login
                   </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* FORM COLUMN 2 */}
+            <div className="hidden md:w-1/2 md:flex items-center justify-center p-6 bg-gradient-to-bl from-slate-800/20 to-transparent">
+              <div>
+                <img src="./signup.png" alt="signup-page-image" className="w-full h-auto object-contain" />
+
+                <div className="mt-6 text-center">
+                  <h3 className="text-xl font-medium text-cyan-400">Start your journey today</h3>
+
+                  <div className="mt-4 flex justify-center gap-4">
+                    <span className="auth-badge">Free</span>
+
+                    <span className="auth-badge">Easy setup</span>
+                    
+                    <span className="auth-badge">Private</span>
+                  </div>
                 </div>
               </div>
             </div>
