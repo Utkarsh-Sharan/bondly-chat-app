@@ -65,4 +65,23 @@ export const useAuthStore = create((set) => ({
       set({ isLoggingin: false });
     }
   },
+
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+
+      toast.success("Logged out successfully!");
+    } catch (error) {
+      const backend = error.response?.data;
+
+      if (backend?.errors && backend.errors.length > 0) {
+        // Show the first validation error
+        const firstError = Object.values(backend.errors[0])[0];
+        toast.error(firstError);
+      } else {
+        toast.error(backend?.message || "Something went wrong");
+      }
+    }
+  },
 }));
