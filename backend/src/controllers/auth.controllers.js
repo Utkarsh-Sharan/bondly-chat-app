@@ -41,7 +41,7 @@ export const signup = asyncHandler(async (req, res) => {
   try {
     await sendWelcomeEmail(user.email, user.fullname, process.env.CLIENT_URL);
   } catch (error) {
-    throw new ApiError(400, "Failed to send welcome email!");
+    console.error("Failed to send welcome email!", error);
   }
 
   const createdUser = await User.findById(user._id).select(
