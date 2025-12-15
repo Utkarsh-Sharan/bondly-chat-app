@@ -31,4 +31,14 @@ app.get("/", (req, res) => {
   res.send("Hello from test!");
 });
 
+// GLOBAL ERROR HANDLER
+app.use((err, req, res, next) => {
+  res.status(err.statusCode || 500).json({
+    success: err.success || false,
+    message: err.message || "Something went wrong",
+    errors: err.errors || null,
+    data: err.data || null,
+  });
+});
+
 export default app;
