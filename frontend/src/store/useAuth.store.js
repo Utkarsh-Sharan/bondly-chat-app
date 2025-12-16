@@ -84,4 +84,22 @@ export const useAuthStore = create((set) => ({
       }
     }
   },
+
+  updateProfile: async (data) => {
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", data);
+      set({authUser: res.data});
+
+      toast.success("Profile image uploaded successfully!");
+    } catch (error) {
+      const backend = error.response?.data;
+
+      if (backend?.errors && backend.errors.length > 0) {
+        const firstError = Object.values(backend.errors[0])[0];
+        toast.error(firstError);
+      } else {
+        toast.error(backend?.message || "Something went wrong");
+      }
+    }
+  }
 }));
