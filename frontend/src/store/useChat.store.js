@@ -25,9 +25,9 @@ export const useChatStore = create((set, get) => ({
     set({ isUsersLoading: true });
 
     try {
-      const res = await axiosInstance.get("/message/chats");
-
-      set({ allContacts: res.data });
+      const res = await axiosInstance.get("/message/contacts");
+      
+      set({ allContacts: res.data.data.filteredUsers });
     } catch (error) {
       const backend = error.response?.data;
 
@@ -47,7 +47,7 @@ export const useChatStore = create((set, get) => ({
 
     try {
       const res = await axiosInstance.get("/message/chats");
-      
+
       set({ chats: res.data.data.chatPartners });
     } catch (error) {
       const backend = error.response?.data;
