@@ -47,8 +47,8 @@ export const useChatStore = create((set, get) => ({
 
     try {
       const res = await axiosInstance.get("/message/chats");
-
-      set({ chats: res.data });
+      
+      set({ chats: res.data.data.chatPartners });
     } catch (error) {
       const backend = error.response?.data;
 
