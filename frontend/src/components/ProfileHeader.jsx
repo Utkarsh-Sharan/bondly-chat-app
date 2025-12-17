@@ -23,7 +23,7 @@ function ProfileHeader() {
       const base64Image = reader.result;
       setSelectedImage(base64Image);
 
-      await updateProfile({ avatar: { url: base64Image } });
+      await updateProfile({ avatar: base64Image });
     };
   };
 

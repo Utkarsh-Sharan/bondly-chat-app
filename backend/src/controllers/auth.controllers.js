@@ -127,7 +127,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        { updatedUser },
+        { user: updatedUser },
         "User profile updated successfully!",
       ),
     );
