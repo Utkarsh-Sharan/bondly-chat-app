@@ -100,6 +100,14 @@ export const login = asyncHandler(async (req, res) => {
     );
 });
 
+export const getCurrentUser = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, { user: req.user }, "User fetched Successfully!"),
+    );
+});
+
 export const updateProfile = asyncHandler(async (req, res) => {
   const { avatar } = req.body;
 
@@ -120,14 +128,14 @@ export const updateProfile = asyncHandler(async (req, res) => {
     { new: true },
   );
 
-  if(!updatedUser) throw new ApiError(404, "User not found!");
+  if (!updatedUser) throw new ApiError(404, "User not found!");
 
   return res
     .status(200)
     .json(
       new ApiResponse(
         200,
-        { updatedUser },
+        { user: updatedUser },
         "User profile updated successfully!",
       ),
     );

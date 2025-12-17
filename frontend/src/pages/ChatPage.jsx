@@ -1,4 +1,3 @@
-import { useAuthStore } from "../store/useAuth.store.js";
 import { useChatStore } from "../store/useChat.store.js";
 import BorderAnimatedContainer from "../components/BorderAnimatedContainer.jsx";
 import ProfileHeader from "../components/ProfileHeader.jsx";
@@ -9,7 +8,6 @@ import ChatContainer from "../components/ChatContainer.jsx";
 import NoConversationPlaceholder from "../components/NoConversationPlaceholder.jsx";
 
 function ChatPage() {
-  const { logout } = useAuthStore();
   const { activeTab, selectedUser } = useChatStore();
 
   return (
