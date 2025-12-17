@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   signup,
   login,
+  getCurrentUser,
   updateProfile,
   logout,
 } from "../controllers/auth.controllers.js";
@@ -23,6 +24,7 @@ router.route("/signup").post(userSignupValidator(), validate, signup);
 router.route("/login").post(userLoginValidator(), validate, login);
 
 //Protected routes
+router.route("/get-current-user").get(verifyJWT, getCurrentUser);
 router.route("/update-profile").put(verifyJWT, updateProfile);
 router.route("/logout").post(verifyJWT, logout);
 

@@ -10,7 +10,7 @@ export const useAuthStore = create((set) => ({
 
   checkAuth: async () => {
     try {
-      const res = await axiosInstance.get("/auth/login");
+      const res = await axiosInstance.get("/auth/get-current-user");
       set({ authUser: res.data });
     } catch (error) {
       console.log(`Error in auth check ${error}`);
@@ -88,7 +88,7 @@ export const useAuthStore = create((set) => ({
   updateProfile: async (data) => {
     try {
       const res = await axiosInstance.put("/auth/update-profile", data);
-      set({authUser: res.data});
+      set({ authUser: res.data });
 
       toast.success("Profile image uploaded successfully!");
     } catch (error) {
@@ -101,5 +101,5 @@ export const useAuthStore = create((set) => ({
         toast.error(backend?.message || "Something went wrong");
       }
     }
-  }
+  },
 }));
