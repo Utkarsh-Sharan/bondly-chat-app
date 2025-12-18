@@ -70,7 +70,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get("message/get-messages");
       console.log(res.data);
 
-      // set({messages: res.data});
+      set({messages: res.data});
     } catch (error) {
       const backend = error.response?.data;
 
