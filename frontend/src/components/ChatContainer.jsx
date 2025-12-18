@@ -3,9 +3,12 @@ import { useChatStore } from "../store/useChat.store.js";
 import { useAuthStore } from "../store/useAuth.store.js";
 import ChatHeader from "./ChatHeader.jsx";
 import NoChatHistoryPlaceholder from "./NoChatHistoryPlaceHolder.jsx";
+import MessageInput from "./MessageInput.jsx";
+import MessagesLoadingSkelton from "./MessagesLoadingSkelton.jsx";
 
 function ChatContainer() {
-  const { messages, getMessagesByUserId, selectedUser } = useChatStore();
+  const { messages, getMessagesByUserId, selectedUser, isMessagesLoading } =
+    useChatStore();
   const { authUser } = useAuthStore();
 
   useEffect(() => {
@@ -15,9 +18,9 @@ function ChatContainer() {
   return (
     <>
       <ChatHeader />
-      
+
       <div className="flex-1 px-6 py-8 overflow-y-auto">
-        {messages.length > 0 ? (
+        {messages.length && !isMessagesLoading > 0 ? (
           <div className="max-w-3xl mx-auto space-y-6">
             {messages.map((msg) => (
               <div
@@ -52,10 +55,12 @@ function ChatContainer() {
               </div>
             ))}
           </div>
-        ) : (
+        ) : isMessagesLoading ? <MessagesLoadingSkelton /> : (
           <NoChatHistoryPlaceholder name={selectedUser.fullname} />
         )}
       </div>
+
+      <MessageInput />
     </>
   );
 }
