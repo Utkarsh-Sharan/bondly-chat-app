@@ -16,7 +16,7 @@ function ChatList() {
 
   return (
     <>
-      {chats.map((chat) => {
+      {chats.map((chat) => (
         <div
           key={chat._id}
           className="bg-cyan-500/10 p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20 transition-colors"
@@ -25,9 +25,7 @@ function ChatList() {
           }}
         >
           <div className="flex items-center gap-3">
-            <div
-              className={`avatar online`}
-            >
+            <div className={`avatar online`}>
               <div className="size-12 rounded-full">
                 <img
                   src={chat.avatar.url || "./avatar.png"}
@@ -36,11 +34,11 @@ function ChatList() {
               </div>
             </div>
             <h4 className="text-slate-200 font-medium truncate">
-              {chat.fullName}
+              {chat.fullname}
             </h4>
           </div>
-        </div>;
-      })}
+        </div>
+      ))}
     </>
   );
 }

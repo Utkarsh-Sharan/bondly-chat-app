@@ -90,7 +90,7 @@ export const useChatStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post(`message/send-message/${selectedUser._id}`, messageData);
 
-      set({messages: messages.concat(res.data.data.messages)});
+      set({messages: messages.concat(res.data.data.newMessage)});
     } catch (error) {
       const backend = error.response?.data;
 
