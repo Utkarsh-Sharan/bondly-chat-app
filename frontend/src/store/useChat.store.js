@@ -83,4 +83,23 @@ export const useChatStore = create((set, get) => ({
       set({ isMessagesLoading: false });
     }
   },
+
+  sendMessage: async (messageData) => {
+    const { selectedUser, messages } = get();
+
+    try {
+      const res = await axiosInstance.post(`message/send-message/${selectedUser._id}`, messageData);
+
+      set({messages: messages.concat(res.data.data.messages)});
+    } catch (error) {
+      const backend = error.response?.data;
+
+      if (backend?.errors && backend.errors.length > 0) {
+        const firstError = Object.values(backend.errors[0])[0];
+        toast.error(firstError);
+      } else {
+        toast.error(backend?.message || "Something went wrong");
+      }
+    }
+  }
 }));
