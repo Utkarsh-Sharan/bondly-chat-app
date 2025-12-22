@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { app } from "./lib/socket.js";
 
-const app = express();
+// const app = express();
 
 //Basic config
 app.use(express.json({ limit: "5mb" }));
