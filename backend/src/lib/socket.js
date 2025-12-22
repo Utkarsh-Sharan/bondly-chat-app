@@ -1,14 +1,16 @@
+import dotenv from "dotenv";
 import { Server } from "socket.io";
 import http from "http";
-import express from "express";
 import { socketAuth } from "../middlewares/socket.auth.middleware.js";
+import app from "../app.js";
 
-const app = express();
+dotenv.config();
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.CORS_ORIGIN,
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
