@@ -1,0 +1,25 @@
+{
+  "name": "bondly",
+  "version": "1.0.0",
+  "description": "Bondly is a real-time chat application built with MERN stack.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Utkarsh-Sharan/bondly-chat-app.git"
+  },
+  "keywords": [
+    "chat-app",
+    "MERN",
+    "socket.io"
+  ],
+  "author": "Utkarsh Sharan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Utkarsh-Sharan/bondly-chat-app/issues"
+  },
+  "homepage": "https://github.com/Utkarsh-Sharan/bondly-chat-app#readme"
+}
