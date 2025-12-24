@@ -38,4 +38,9 @@ io.on("connection", (socket) => {
   });
 });
 
+//check if user is online or not
+export function getReceiverSocketId(userId) {
+  return userSocketMap[userId];
+}
+
 export { io, app, server };

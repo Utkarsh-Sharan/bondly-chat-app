@@ -7,14 +7,24 @@ import MessageInput from "./MessageInput.jsx";
 import MessagesLoadingSkelton from "./MessagesLoadingSkelton.jsx";
 
 function ChatContainer() {
-  const { messages, getMessagesByUserId, selectedUser, isMessagesLoading } =
-    useChatStore();
+  const {
+    messages,
+    getMessagesByUserId,
+    selectedUser,
+    isMessagesLoading,
+    subscribeToMessages,
+    unsubscribeFromMessages,
+  } = useChatStore();
   const { authUser } = useAuthStore();
 
-  const messageEndRef  = useRef(null);
+  const messageEndRef = useRef(null);
 
   useEffect(() => {
     getMessagesByUserId(selectedUser._id);
+    subscribeToMessages();
+
+    //cleanup
+    return () => unsubscribeFromMessages();
   }, [selectedUser, getMessagesByUserId]);
 
   useEffect(() => {

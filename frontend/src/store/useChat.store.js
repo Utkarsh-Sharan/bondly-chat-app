@@ -3,6 +3,8 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { useAuthStore } from "./useAuth.store.js";
 
+const notificationSound = new Audio("/sounds/notification.mp3");
+
 export const useChatStore = create((set, get) => ({
   allContacts: [],
   chats: [],
@@ -101,7 +103,7 @@ export const useChatStore = create((set, get) => ({
       isOptimistic: true,
     };
 
-    set({ messages: [...messages, optimisticMessage] });  //immediately add sender's message to the chat container.
+    set({ messages: [...messages, optimisticMessage] }); //immediately add sender's message to the chat container.
 
     try {
       const res = await axiosInstance.post(
@@ -111,7 +113,7 @@ export const useChatStore = create((set, get) => ({
 
       set({ messages: messages.concat(res.data.data.newMessage) });
     } catch (error) {
-      set({messages: messages});  //set to previous state if optimistic message fails
+      set({ messages: messages }); //set to previous state if optimistic message fails
 
       const backend = error.response?.data;
 
@@ -122,5 +124,33 @@ export const useChatStore = create((set, get) => ({
         toast.error(backend?.message || "Something went wrong");
       }
     }
+  },
+
+  subscribeToMessages: () => {
+    const { selectedUser, isSoundEnabled } = get();
+    if (!selectedUser) return;
+
+    const socket = useAuthStore.getState().socket;
+
+    socket.on("newMessage", (newMessage) => {
+      const isMessageSentFromSelectedUser =
+        newMessage.senderId === selectedUser._id;
+      if (!isMessageSentFromSelectedUser) return;
+
+      const currentMessages = get().messages;
+      set({ messages: [...currentMessages, newMessage] });
+
+      if (isSoundEnabled) {
+        notificationSound.currentTime = 0;
+        notificationSound
+          .play()
+          .catch((e) => console.log("Failed to play notification sound!", e));
+      }
+    });
+  },
+
+  unsubscribeFromMessages: () => {
+    const socket = useAuthStore.getState().socket;
+    socket.off("newMessage");
   },
 }));
