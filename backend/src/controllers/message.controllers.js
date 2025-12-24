@@ -4,6 +4,7 @@ import { ApiError } from "../utils/api-error.js";
 import { Message } from "../models/message.model.js";
 import { User } from "../models/user.model.js";
 import cloudinary from "../lib/cloudinary.js";
+import { getReceiverSocketId, io } from "../lib/socket.js";
 
 export const getAllContacts = asyncHandler(async (req, res) => {
   const loggedInUserId = req.user._id;
@@ -51,8 +52,7 @@ export const getChatPartners = asyncHandler(async (req, res) => {
     _id: { $in: chatPartnersIds },
   }).select("-password -refreshToken");
 
-  if (!chatPartners)
-    throw new ApiError(400, "Failed to fetch chat partners!");
+  if (!chatPartners) throw new ApiError(400, "Failed to fetch chat partners!");
 
   return res
     .status(200)
@@ -115,7 +115,12 @@ export const sendMessagetoUser = asyncHandler(async (req, res) => {
 
   await newMessage.save({ validateBeforeSave: false });
 
-  //todo: send message to receiver if they are online with socket.io
+  //send message to receiver if they are online with socket.io
+  const receiverSocketId = getReceiverSocketId(receiverId);
+  //checking if user is online or not. If yes, send the message
+  if (receiverSocketId) {
+    io.to(receiverSocketId).emit("newMessage", newMessage);
+  }
 
   return res
     .status(201)
