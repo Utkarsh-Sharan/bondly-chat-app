@@ -31,10 +31,6 @@ import messageRouter from "./routes/message.routes.js";
 app.use("/api/auth", authRouter);
 app.use("/api/message", messageRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello from test!");
-});
-
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).json({
