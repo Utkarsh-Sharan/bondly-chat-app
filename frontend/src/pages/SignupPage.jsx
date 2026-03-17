@@ -8,7 +8,7 @@ import {
   UserIcon,
   LoaderIcon,
 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 function SignupPage() {
   const [formData, setFormData] = useState({
@@ -16,11 +16,12 @@ function SignupPage() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const { signup, isSigningup } = useAuthStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(formData);
+    signup(formData, navigate);
   };
 
   return (

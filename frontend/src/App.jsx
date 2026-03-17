@@ -34,7 +34,7 @@ function App() {
         />
         <Route
           path="/signup"
-          element={!authUser ? <SignupPage /> : <Navigate to={"/"} />}
+          element={!authUser ? <SignupPage /> : <Navigate to={"/login"} />}
         />
       </Routes>
 
