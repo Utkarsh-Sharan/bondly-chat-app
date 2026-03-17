@@ -5,6 +5,7 @@ import {
   getCurrentUser,
   updateProfile,
   logout,
+  refreshAccessToken,
 } from "../controllers/auth.controllers.js";
 import { validate } from "../middlewares/validator.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -22,6 +23,7 @@ router.use(arcjetProtection);
 //Un-protected routes
 router.route("/signup").post(userSignupValidator(), validate, signup);
 router.route("/login").post(userLoginValidator(), validate, login);
+router.route("/refresh-token").post(refreshAccessToken);
 
 //Protected routes
 router.route("/get-current-user").get(verifyJWT, getCurrentUser);
